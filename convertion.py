@@ -1,5 +1,11 @@
 import tkinter as tk
 
+def eb(nombre): # verification si le nombre est binaire ou pas pour les fonctions qui ont besoin d'avoir une entré en binaire
+    for carac in nombre:
+        if carac not in '01':
+            return False
+    return True
+
 def dtb(decimal): # convertisseur du décimal au binaire
     binaire = ""
     if decimal == 0:
@@ -11,8 +17,10 @@ def dtb(decimal): # convertisseur du décimal au binaire
     return binaire
 
 def btd(binaire): # convertisseur du binaire au décimal
+    if not eb(binaire):
+        return "Veuillez entrer une valeur binaire valide"
     decimal = 0
-    binaire = binaire[::-1] # retourne la chaine de character
+    binaire = binaire[::-1] # retourne la chaine de caractère
     for i in range(len(binaire)):
         if binaire[i] == '1':
             decimal += 2**i
@@ -34,7 +42,7 @@ def htd(hex_value): # convertisseur du hexadecimal au décimal
     decimal = 0
     hex_value = hex_value[::-1] # retourne la chaine de caractere
     for i in range(len(hex_value)):
-        caractere = hex_value[i]
+        caractere = hex_value[i].upper()
         x = 0
         for j in range(len(hex_carac)):
             if hex_carac[j] == caractere:
@@ -43,6 +51,8 @@ def htd(hex_value): # convertisseur du hexadecimal au décimal
     return decimal
 
 def bth(binaire): # convertisseur du binaire au hexadecimal
+    if not eb(binaire):
+        return "Veuillez entrer une valeur binaire valide"
     decimal_value = btd(binaire)
     return dth(decimal_value)
 
@@ -55,25 +65,34 @@ def convert(): # Fonction appelée lorsqu'un bouton est cliqué
     input_text = entry.get()
     conversion_type = conversion_var.get()
     
+    result = ""  # Valeur par défaut de result
+
+    if not input_text: # Texte pour quand l'utilisateur n'entre pas de valeur
+        result_label.config(text="Veuillez entrer une valeur")
+        return
+
     if conversion_type == "Decimal au Binaire":
         result = dtb(int(input_text))
     elif conversion_type == "Binaire au Decimal":
         result = btd(input_text)
     elif conversion_type == "Decimal au Hexadecimal":
         result = dth(int(input_text))
-    elif conversion_type == "Hexdecimal au Decimal":
+    elif conversion_type == "Hexadecimal au Decimal":
         result = htd(input_text)
     elif conversion_type == "Binaire au Hexadecimal":
         result = bth(input_text)
     elif conversion_type == "Hexadecimal au Binaire":
         result = htb(input_text)
     
-    result_label.config(text=f"Resultat: {result}")
+    result_label.config(text=f"Resultat: {result}") # formatage de la valeur
 
 # Création de la fenêtre Tkinter
 window = tk.Tk()
-window.geometry("500x400")
+window.geometry("300x200")
 window.title("Convertisseur")
+
+# Empêcher la redimension de la fenêtre
+window.resizable(False, False)
 
 entry = tk.Entry(window)
 entry.pack()
