@@ -60,6 +60,18 @@ def htb(hex_value): # convertisseur du hexadecimal au binaire
     decimal_value = htd(hex_value)
     return dtb(decimal_value)
 
+def dtb_complement_deux(decimal, bits=8):
+    if decimal < 0:
+        binaire = bin(2**bits + decimal)[2:]
+    else:
+        binaire = bin(decimal)[2:]
+    
+    if len(binaire) > bits: # Supprimer les bits excédentaires à gauche
+        binaire = binaire[-bits:]
+    else: # Ajouter des zéros à gauche si la longueur est inférieure au nombre de bits spécifié (donc 8)
+        binaire = '0' * (bits - len(binaire)) + binaire
+    
+    return binaire
 
 def convert(): # Fonction appelée lorsqu'un bouton est cliqué
     input_text = entry.get()
@@ -69,6 +81,10 @@ def convert(): # Fonction appelée lorsqu'un bouton est cliqué
 
     if not input_text: # Texte pour quand l'utilisateur n'entre pas de valeur
         result_label.config(text="Veuillez entrer une valeur")
+        return
+
+    if conversion_type != "Complément à deux en 8 Bits" and input_text[0] == '-':  # Ajout de la vérification pour les nombres négatifs
+        result_label.config(text="Veuillez entrer une valeur positive")
         return
 
     if conversion_type == "Decimal au Binaire":
@@ -83,6 +99,8 @@ def convert(): # Fonction appelée lorsqu'un bouton est cliqué
         result = bth(input_text)
     elif conversion_type == "Hexadecimal au Binaire":
         result = htb(input_text)
+    elif conversion_type == "Complément à deux en 8 Bits":
+        result = dtb_complement_deux(int(input_text))
     
     result_label.config(text=f"Resultat: {result}") # formatage de la valeur
 
@@ -101,7 +119,8 @@ conversion_var = tk.StringVar()
 conversion_var.set("Decimal au Binaire")
 
 # Menu déroulant
-conversion_menu = tk.OptionMenu(window, conversion_var, "Decimal au Binaire", "Binaire au Decimal", "Decimal au Hexadecimal", "Hexadecimal au Decimal", "Binaire au Hexadecimal", "Hexadecimal au Binaire")
+conversion_menu = tk.OptionMenu(window, conversion_var, "Decimal au Binaire", "Binaire au Decimal", "Decimal au Hexadecimal", "Hexadecimal au Decimal", "Binaire au Hexadecimal", "Hexadecimal au Binaire", "Complément à deux en 8 Bits")
+
 conversion_menu.pack()
 
 # Bouton de conversion
