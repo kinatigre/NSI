@@ -35,7 +35,6 @@ def pendu():
             for i in range(len(lettre)): #boucle pour parcourir toute la liste lettre
                 if mot_donne == lettre[i]: # vérifie si la lettre donné est dans le mot a trouver
                     nbrM[i] = mot_donne
-                    lettre[i] = '$' #remplace la letre trouvé par $ pour si il y a plusieur fois la même lettre dans un mot
                     trouve = True
             if not trouve:
                 if mot_donne == mot: #ajoute +1 a la variable erreur si la lettre n'est pas dans la mot et que si l'utilisateur donne un mot ce n'est pas le bon mot plus
@@ -50,7 +49,6 @@ def pendu():
                 print(" ".join(mot_donne)) #affiche le mot en complet si il est trouvé
             else:
                 print((" ".join(nbrM))) #affiche les lettres trouvé si il ne trouve pas le mot au complet
-            e = erreur + 1
             print(etape[erreur])
             if "_" not in nbrM or mot_donne == mot: #verrifie si il reste des "_" dans la variable nbrM ou si la variable mot_donne égal a la variable mot
                 print("Bien joué! Le mot était:")
