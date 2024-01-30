@@ -29,7 +29,7 @@ def pendu():
                 print("Vous avez déjà utilisé cette lettre. Veuillez choisir une autre lettre.")
                 print((" ".join(nbrM)))
                 print(etape[erreur])
-                continue
+                continue #revient au début de la boucle sans éxecuter le reste de la boucle
             lettres_utilise.append(mot_donne)
             trouve = False
             for i in range(len(lettre)): #boucle pour parcourir toute la liste lettre
