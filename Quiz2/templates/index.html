@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../static/style.css" />
+    <title>Base de données simple</title>
+  </head>
+  <body>
+    <h1>Base de données simple</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Point</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in data %}
+        <tr>
+          <td>{{ item[0] }}</td>
+          <td>{{ item[1] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <h2>Ajouter une nouvelle entrée</h2>
+    <form action="http://127.0.0.1:5000/add" method="post">
+      <label for="nom">Nom:</label>
+      <input type="text" id="nom" name="nom" required />
+      <label for="point">Point:</label>
+      <input type="text" id="point" name="point" required />
+      <button type="submit">Ajouter</button>
+    </form>
+  </body>
+</html>
