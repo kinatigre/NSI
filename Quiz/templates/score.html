@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../static/css/score.css" />
+    <title>Base de données simple</title>
+  </head>
+  <body>
+    <h1>Base de données simple</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Point</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for nom, point in data %}
+        <tr>
+          <td>{{ nom }}</td>
+          <td>{{ point }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <a href="qcm?nom={{nom}}">
+        <button>Aller vers une autre page</button>
+      </a>
+    </table>
+    <form action="http://127.0.0.1:5000/add" method="POST">
+      <input type="hidden" id="nom" name="nom" value="{{nom}}" />
+      <input type="hidden" id="point" name="point" value="{{point}}" />
+    </form>
+  </body>
+</html>

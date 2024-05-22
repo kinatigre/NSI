@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choisissez un nom</title>
+    <link rel="stylesheet" href="../static/css/login.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Bienvenue sur Mastery</h1>
+        <p>Avant de continuer, veuillez choisir un nom d'utilisateur.</p>
+        <form id="nameForm">
+            <input type="text" id="nameInput" placeholder="Entrez votre nom" required>
+            <button type="submit">Continuer</button>
+        </form>
+    </div>
+    <script>
+        const form = document.getElementById('nameForm');
+        form.addEventListener('submit', (event) => {
+            event.preventDefault(); // Empêche le rechargement de la page
+            const nameInput = document.getElementById('nameInput');
+            const nom = nameInput.value.trim();
+            if (nom) {
+                localStorage.setItem('userName', nom);
+                // Rediriger vers score.html ou effectuer d'autres actions
+                window.location.href = "/score?nom=" + encodeURIComponent(nom);
+            }
+        });
+    </script>
+</body>
+</html>
