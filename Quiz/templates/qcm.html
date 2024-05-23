@@ -11,6 +11,9 @@
         <div id="home" class="page">
             <h1>Bienvenue sur Mastery</h1>
             <button onclick="startGame()" >Commencer</button>
+            <a href="score?nom={{nom}}" id="d">
+                <button class="score" >Tableau de score</button>
+            </a>
         </div>
         
         <div id="quiz" class="page hidden">
@@ -26,9 +29,6 @@
             <button onclick="sendResult()">Envoyer le résultat</button>
         </div>
     </div>
-    <a href="score?nom={{nom}}" id="d">
-        <button>Aller vers une autre page</button>
-    </a>
     <script src="../static/js/script.js"></script>
 </body>
 </html>

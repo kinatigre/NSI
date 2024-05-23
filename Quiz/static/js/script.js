@@ -1,22 +1,94 @@
 const questions = [
     {
-        question: "1",
+        question: "Quel est le nom du monde fictif où se déroule League of Legends ?",
         answers: [
-            { text: "1", correct: true },
-            { text: "2", correct: false },
-            { text: "3", correct: false },
-            { text: "4", correct: false }
+            { text: "Runeterra", correct: true },
+            { text: "Azeroth", correct: false },
+            { text: "Midgard", correct: false },
+            { text: "Tamriel", correct: false }
         ]
     },
     {
-        question: "2",
+        question: "Qui a développé le jeu League of Legends ?",
         answers: [
-            { text: "1", correct: false },
-            { text: "2", correct: false },
-            { text: "3", correct: true },
-            { text: "4", correct: false }
+            { text: "Blizzard Entertainment", correct: false },
+            { text: "Riot Games", correct: true },
+            { text: "Valve Corporation", correct: false },
+            { text: "Electronic Arts", correct: false }
         ]
-    }   
+    },
+    {
+        question: "Combien de champions étaient disponibles lors de la sortie initiale de LoL en 2009 ?",
+        answers: [
+            { text: "20", correct: true },
+            { text: "40", correct: false },
+            { text: "60", correct: false },
+            { text: "80", correct: false }
+        ]
+    },
+    {
+        question: "Quel champion est connu sous le nom de \"la Fille de la Glace\" ?",
+        answers: [
+            { text: "Ashe", correct: false },
+            { text: "Lissandra", correct: true },
+            { text: "Sejuani", correct: false },
+            { text: "Anivia", correct: false }
+        ]
+    },
+    {
+        question: "Quelle est l'ultime capacité du champion Ezreal ?",
+        answers: [
+            { text: "Essaim de missiles", correct: false },
+            { text: "Tir nourri", correct: false },
+            { text: "Trait de feu", correct: false },
+            { text: "Traque-éclair", correct: true }
+        ]
+    },
+    {
+        question: "De quelle région provient le champion Wukong ?",
+        answers: [
+            { text: "Ionia", correct: true },
+            { text: "Noxus", correct: false },
+            { text: "Demacia", correct: false },
+            { text: "Freljord", correct: false }
+        ]
+    },
+    {
+        question: "Quel est le nom du champ de bataille principal de League of Legends ?",
+        answers: [
+            { text: "La Faille de l'Invocateur", correct: true },
+            { text: "L'Abîme Hurlant", correct: false },
+            { text: "Le Tutoriel", correct: false },
+            { text: "La Forêt Tourmentée", correct: false }
+        ]
+    },
+    {
+        question: "Qui est le champion connu pour être un maître voleur ?",
+        answers: [
+            { text: "Twisted Fate", correct: true },
+            { text: "Graves", correct: false },
+            { text: "Jhin", correct: false },
+            { text: "Lucian", correct: false }
+        ]
+    },
+    {
+        question: "Quel champion est une fusion entre une femme et un serpent ?",
+        answers: [
+            { text: "Evelynn", correct: false },
+            { text: "Elise", correct: false },
+            { text: "Cassiopeia", correct: true },
+            { text: "Shyvana", correct: false }
+        ]
+    },
+    {
+        question: "Quel est le nom du trophée remis aux vainqueurs du Championnat du Monde de LoL ?",
+        answers: [
+            { text: "La Coupe de Cristal", correct: false },
+            { text: "Le Calice de l'Invocateur", correct: false },
+            { text: "La Coupe des Conquérants", correct: true },
+            { text: "La Coupe des Invocateurs", correct: false }
+        ]
+    }
 ];
 
 let shuffledQuestions, currentQuestionIndex, score;
@@ -30,24 +102,19 @@ function sendResult() {
     const lien = document.querySelector('a[href^="score?nom="]');
     const href = lien.getAttribute('href');
     const nom = href.split('nom=')[1].split('}}')[0];
-    const point = score; // Utiliser la variable score existante
 
     // Créer un objet FormData pour envoyer les données
     const formData = new FormData();
     formData.append('nom', nom);
-    formData.append('point', point);
+    formData.append('point', score);
 
     // Envoyer une requête POST à /add
     fetch('/add', {
         method: 'POST',
         body: formData
     })
-    .then(response => {
-        // Rediriger vers la page score après l'ajout des données
+    .then( () => {
         window.location.href = `/score?nom=${nom}`;
-    })
-    .catch(error => {
-        console.error('Erreur :', error);
     });
 }
 
@@ -112,18 +179,24 @@ function selectAnswer(e) {
     document.getElementById('next-btn').classList.remove('hidden');
 }
 
+
 function setStatusClass(element, correct) {
     clearStatusClass(element);
     if (correct) {
         element.classList.add('correct');
+        element.classList.add('vert');
     } else {
         element.classList.add('wrong');
+        element.classList.add('rouge');
     }
 }
 
 function clearStatusClass(element) {
     element.classList.remove('correct');
     element.classList.remove('wrong');
+    element.classList.remove('vert');
+    element.classList.remove('rouge');
+
 }
 
 function showResults() {

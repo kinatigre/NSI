@@ -45,3 +45,21 @@ button:hover {
     flex-direction: column;
     align-items: center;
 }
+
+.vert {
+    background-color: #4c9c4f;
+    color: white;
+}
+
+.rouge {
+    background-color: #F44336;
+    color: white;
+}
+
+.vert:hover {
+    background-color: #3CAF50;
+}
+
+.rouge:hover {
+    background-color: #c9473e;
+}
