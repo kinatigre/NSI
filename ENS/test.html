@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Graphique à barres</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    .chart {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .bar {
+      width: 50px;
+      background-color: #4CAF50;
+      margin: 0 10px;
+      position: relative;
+      text-align: center;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bar span {
+      font-size: 14px;
+    }
+
+    .labels {
+      display: flex;
+      justify-content: center;
+    }
+
+    .labels span {
+      margin: 0 20px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Ventes annuelles</h1>
+  <div class="chart">
+    <div class="bar" style="height: 85%;">
+      <span>85%</span>
+    </div>
+    <div class="bar" style="height: 75%;">
+      <span>75%</span>
+    </div>
+    <div class="bar" style="height: 60%;">
+      <span>60%</span>
+    </div>
+    <div class="bar" style="height: 90%;">
+      <span>90%</span>
+    </div>
+    <div class="bar" style="height: 70%;">
+      <span>70%</span>
+    </div>
+  </div>
+  <div class="labels">
+    <span>2019</span>
+    <span>2020</span>
+    <span>2021</span>
+    <span>2022</span>
+    <span>2023</span>
+  </div>
+</body>
+</html>
