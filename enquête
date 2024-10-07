@@ -1,0 +1,90 @@
+Rapport d'enquête : Meurtre à SQL City
+Identification du crime
+sql
+SELECT *
+FROM crime_scene_report
+WHERE date = 20180115 AND city = 'SQL City' AND type = 'murder';
+
+Résultat : Un meurtre a eu lieu le 15 janvier 2018 sur Security Boulevard à SQL City. Deux témoins sont mentionnés.
+Conclusion : Nous avons identifié le lieu et la date du crime, ainsi que l'existence de deux témoins potentiels.
+Localisation des témoins
+sql
+SELECT *
+FROM person
+WHERE address_street_name = 'Northwestern Dr'
+ORDER BY address_number DESC
+LIMIT 1;
+
+Résultat : Morty Schapiro, ID 14887, résidant au 4919 Northwestern Dr.
+sql
+SELECT *
+FROM person
+WHERE name LIKE 'Annabel%' AND address_street_name = 'Franklin Ave';
+
+Résultat : Annabel Miller, ID 16371, résidant au 103 Franklin Ave.
+Conclusion : Nous avons identifié les deux témoins mentionnés dans le rapport de crime.
+Témoignages
+sql
+SELECT *
+FROM interview
+WHERE person_id IN (14887, 16371);
+
+Résultats :
+Morty a vu une voiture avec la plaque d'immatriculation partielle "H42W".
+Annabel a reconnu le tueur comme membre du gym "Get Fit Now".
+Conclusion : Ces témoignages nous donnent des indices cruciaux sur le véhicule du suspect et son appartenance à un club de gym.
+Identification du suspect principal
+sql
+SELECT p.*, d.plate_number, gfn.id AS gym_id, gfn.membership_status
+FROM person p
+JOIN drivers_license d ON p.license_id = d.id
+JOIN get_fit_now_member gfn ON p.id = gfn.person_id
+WHERE d.plate_number LIKE '%H42W%'
+  AND gfn.id LIKE '48Z%'
+  AND gfn.membership_status = 'gold'
+  AND p.id IN (
+    SELECT person_id
+    FROM get_fit_now_check_in
+    WHERE check_in_date = 20180115
+  );
+
+Résultat : Jeremy Bowers, ID 67318, correspond à tous les critères du suspect.
+Conclusion : Jeremy Bowers est identifié comme le principal suspect du meurtre.
+Vérification de la solution
+sql
+INSERT INTO solution VALUES (1, 'Jeremy Bowers');
+SELECT value FROM solution;
+
+Résultat : Confirmation que Jeremy Bowers est bien le meurtrier.
+Conclusion : Notre première hypothèse est correcte, mais l'enquête n'est pas terminée.
+Interrogatoire du suspect
+sql
+SELECT transcript
+FROM interview
+WHERE person_id = 67318;
+
+Résultat : Jeremy Bowers avoue avoir été engagé par une femme aux cheveux roux, grande, conduisant une Tesla Model S et fréquentant régulièrement les concerts SQL Symphony.
+Conclusion : Il existe un commanditaire derrière ce meurtre, que nous devons identifier.
+Identification du commanditaire
+sql
+SELECT p.*
+FROM person p
+JOIN drivers_license d ON p.license_id = d.id
+JOIN facebook_event_checkin f ON p.id = f.person_id
+WHERE d.hair_color = 'red'
+  AND d.car_make = 'Tesla'
+  AND d.car_model = 'Model S'
+  AND d.gender = 'female'
+  AND f.event_name = 'SQL Symphony Concert'
+GROUP BY p.id
+HAVING COUNT(DISTINCT f.event_name) = 3;
+
+Résultat : Miranda Priestly, ID 99716, correspond à tous les critères du commanditaire.
+Conclusion : Miranda Priestly est identifiée comme la commanditaire du meurtre.
+Conclusion finale
+sql
+INSERT INTO solution VALUES (1, 'Miranda Priestly');
+SELECT value FROM solution;
+
+Résultat : Confirmation que Miranda Priestly est bien le cerveau derrière le meurtre.
+Conclusion générale : L'enquête a permis d'identifier Jeremy Bowers comme l'exécutant du meurtre et Miranda Priestly comme la commanditaire. L'affaire est résolue.
